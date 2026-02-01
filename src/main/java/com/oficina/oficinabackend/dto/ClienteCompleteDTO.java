@@ -1,38 +1,42 @@
-package com.oficina.oficinabackend.entities;
+package com.oficina.oficinabackend.dto;
 
-import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import com.oficina.oficinabackend.entities.Cliente;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ClienteCompleteDTO {
 
-@Entity
-@Table(name = "cliente")
-public class Cliente {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 3, max = 150)
+    @NotEmpty(message = "Campo requerido")
     private String nome;
 
-    @Column(length = 11, unique = true, name = "cpf")
+    @Length(min = 11, max = 11, message = "Requerido 11 caracteres")
+    @NotEmpty(message = "Campo requerido")
     private String cpf;
 
     private String endereco;
     private String telefone;
 
-    @OneToMany(mappedBy = "cliente")
-    private List<Veiculo> veiculos = new ArrayList<>();
+    public ClienteCompleteDTO() {
+    }
 
-    public Cliente() {}
-
-    public Cliente(Long id, String nome, String cpf, String endereco, String telefone) {
+    public ClienteCompleteDTO(Long id, String nome, String cpf, String endereco, String telefone) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
         this.telefone = telefone;
+    }
+
+    public ClienteCompleteDTO(Cliente entity) {
+        id = entity.getId();
+        nome = entity.getNome();
+        cpf = entity.getCpf();
+        endereco = entity.getEndereco();
+        telefone = entity.getTelefone();
     }
 
     public Long getId() {
@@ -73,9 +77,5 @@ public class Cliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public List<Veiculo> getVeiculos(List<Veiculo> veiculos) {
-        return this.veiculos;
     }
 }
