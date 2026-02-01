@@ -1,0 +1,83 @@
+server:
+  address: 127.0.0.1
+  port: 8080
+
+spring:
+  application:
+    name: oficina
+
+  profiles:
+    active: ${APP_PROFILE:developer}
+
+  jpa:
+    open-in-view: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: developer
+
+  datasource:
+    url: jdbc:h2:mem:oficina_db
+    driver-class-name: org.h2.Driver
+    username: dev
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 20
+    defer-datasource-initialization: true
+
+logging:
+  level:
+    root: INFO
+    com.oficina.oficinabackend: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/oficina}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+
+server:
+  address: 0.0.0.0
+  port: 8080
+
+logging:
+  level:
+    root: WARN
+    com.oficina.oficinabackend: INFO
