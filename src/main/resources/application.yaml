@@ -1,22 +1,25 @@
-server:
-  address: 127.0.0.1
-  port: 8080
-
 spring:
   application:
-    name: oficina
+    name: oficina-backend
 
   profiles:
-    active: ${APP_PROFILE:developer}
+    active: ${APP_PROFILE:test}
 
   jpa:
     open-in-view: false
+
+logging:
+  level:
+    root: INFO
+    com.oficina.oficinabackend: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
 
 ---
 spring:
   config:
     activate:
-      on-profile: developer
+      on-profile: test
 
   datasource:
     url: jdbc:h2:mem:oficina_db
@@ -45,12 +48,8 @@ spring:
           batch_size: 20
     defer-datasource-initialization: true
 
-logging:
-  level:
-    root: INFO
-    com.oficina.oficinabackend: DEBUG
-    org.springframework.web: DEBUG
-    org.hibernate: INFO
+server:
+  port: ${PORT:8080}
 
 ---
 spring:
@@ -74,8 +73,7 @@ spring:
         format_sql: false
 
 server:
-  address: 0.0.0.0
-  port: 8080
+  port: ${PORT:8080}
 
 logging:
   level:
