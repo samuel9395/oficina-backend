@@ -12,11 +12,6 @@ public class FieldMessage {
         this.message = message;
     }
 
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public String getMessage() {
-        return message;
-    }
+    public String getFieldName() {return fieldName;}
+    public String getMessage() {return message;}
 }
