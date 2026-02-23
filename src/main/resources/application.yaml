@@ -55,7 +55,7 @@ server:
 spring:
   config:
     activate:
-      on-profile: production
+      on-profile: prod
 
   datasource:
     url: ${DB_URL:jdbc:mysql://localhost:3306/oficina}

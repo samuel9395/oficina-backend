@@ -1,7 +1,7 @@
 package com.oficina.oficinabackend.controllers;
 
 import com.oficina.oficinabackend.dto.ClienteCompleteDTO;
-import com.oficina.oficinabackend.dto.ClienteDTO;
+import com.oficina.oficinabackend.dto.ClienteMinDTO;
 import com.oficina.oficinabackend.services.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,9 @@ public class ClienteController {
     private ClienteService service;
 
     @GetMapping
-    public ResponseEntity<Page<ClienteDTO>> findAllClients(
+    public ResponseEntity<Page<ClienteMinDTO>> findAllClients(
             @RequestParam(name = "nome", defaultValue = "")String nome, Pageable pageable) {
-        Page<ClienteDTO> dto = service.findAllClients(nome, pageable);
+        Page<ClienteMinDTO> dto = service.findAllClients(nome, pageable);
         return ResponseEntity.ok(dto);
     }
 
