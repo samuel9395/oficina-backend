@@ -52,8 +52,7 @@ public class OrdemServico {
             inverseJoinColumns = @JoinColumn(name = "servico_id"))
     private Set<Servico> servicos = new HashSet<>();
 
-    public OrdemServico() {
-    }
+    public OrdemServico() {}
 
     public OrdemServico(Long numeroOs, LocalDate dataEmissao, LocalDate dataConclusao, StatusAutorizacao statusAutorizacao,
                         StatusExecucao statusExecucao, double valorTotal, List<Veiculo> veiculo, Set<Mecanico> mecanicos) {
