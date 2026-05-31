@@ -1,4 +1,6 @@
 select * from ordem_servico;
+select * from mecanico;
+select * from equipe_mecanica;
 
 -- Mecânicos disponíveis (não em muitas ordens ativas)
 SELECT
@@ -18,7 +20,7 @@ SELECT
     os.status_execucao AS "status de execução",
     os.numero_os AS "nº os"
 FROM equipe_mecanica em
-JOIN mecanico m ON m.id = em.mecanico_id
+JOIN mecanico m ON m.id_mecanico = em.id_mecanico
 JOIN ordem_servico os ON os.numero_os = em.numero_os
 WHERE os.numero_os = '3';
 
@@ -28,6 +30,6 @@ SELECT
     especialidade,
     COUNT(*) as total_mecanicos
 FROM mecanico
-GROUP BY especialidade
+GROUP BY especialidade, nome_mecanico
 ORDER BY total_mecanicos DESC;
 
