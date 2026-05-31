@@ -1,7 +1,6 @@
 package com.oficina.oficinabackend.entities;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,8 @@ public class Cliente {
     @Column(length = 11, unique = true, name = "cpf")
     private String cpf;
 
+    @Column(unique = true)
+    private String email;
     private String endereco;
     private String telefone;
 
@@ -27,12 +28,13 @@ public class Cliente {
 
     public Cliente() {}
 
-    public Cliente(Long id, String nome, String cpf, String endereco, String telefone) {
+    public Cliente(Long id, String nome, String cpf, String endereco, String telefone, String email) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
         this.telefone = telefone;
+        this.email = email;
     }
 
     public Long getId() {
@@ -75,7 +77,15 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public List<Veiculo> getVeiculos(List<Veiculo> veiculos) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Veiculo> getVeiculos() {
         return this.veiculos;
     }
 }

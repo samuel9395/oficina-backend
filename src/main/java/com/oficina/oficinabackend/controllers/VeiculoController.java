@@ -1,12 +1,17 @@
 package com.oficina.oficinabackend.controllers;
 
+import com.oficina.oficinabackend.dto.ClienteMinDTO;
 import com.oficina.oficinabackend.dto.VeiculoDTO;
 import com.oficina.oficinabackend.services.VeiculoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/api/veiculos")
@@ -16,14 +21,24 @@ public class VeiculoController {
     private VeiculoService service;
 
     @GetMapping
-    public ResponseEntity<List<VeiculoDTO>> findAll() {
-        List<VeiculoDTO> dto = service.findAll();
+    public ResponseEntity<Page<VeiculoDTO>> findAll(Pageable pageable) {
+        Page<VeiculoDTO> dto = service.findAll(pageable);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping(value = "/placa")
-    public ResponseEntity<List<VeiculoDTO>> findByPlaca(@RequestParam String placa) {
-        List<VeiculoDTO> dto = service.findByPlaca(placa);
+    public ResponseEntity<Page<VeiculoDTO>> findByPlaca(@RequestParam String placa, Pageable pageable) {
+        Page<VeiculoDTO> dto = service.findByPlaca(placa, pageable);
         return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping
+    public ResponseEntity<VeiculoDTO> insert(@Valid @RequestBody VeiculoDTO dto) {
+        dto = service.insert(dto);
+        URI uri =  ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 }

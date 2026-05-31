@@ -1,6 +1,5 @@
 package com.oficina.oficinabackend.dto;
 
-import com.oficina.oficinabackend.entities.Cliente;
 import com.oficina.oficinabackend.entities.Veiculo;
 
 import java.time.LocalDate;
@@ -14,11 +13,12 @@ public class VeiculoDTO {
     private String placa;
     private LocalDate anoFabricacao;
     private String kilometragem;
+    private Long clienteId;
     private String clienteName;
 
     public VeiculoDTO() {}
 
-    public VeiculoDTO(Long id, String marca, String modelo, String cor, String placa, LocalDate anoFabricacao, String kilometragem, String clienteName) {
+    public VeiculoDTO(Long id, String marca, String modelo, String cor, String placa, LocalDate anoFabricacao, String kilometragem, String clienteName, Long clienteId) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
@@ -26,6 +26,7 @@ public class VeiculoDTO {
         this.placa = placa;
         this.anoFabricacao = anoFabricacao;
         this.kilometragem = kilometragem;
+        this.clienteId = clienteId;
         this.clienteName = clienteName;
     }
 
@@ -38,6 +39,10 @@ public class VeiculoDTO {
         anoFabricacao = entity.getAnoFabricacao();
         kilometragem = entity.getKilometragem();
         clienteName = entity.getCliente().getNome();
+
+        if (entity.getCliente() != null) {
+            clienteId = entity.getCliente().getId();
+        }
     }
 
     public Long getId() {
@@ -96,11 +101,19 @@ public class VeiculoDTO {
         this.kilometragem = kilometragem;
     }
 
-    public String getCliente() {
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public String getClienteName() {
         return clienteName;
     }
 
-    public void setCliente(String clienteName) {
+    public void setClienteName(String clienteName) {
         this.clienteName = clienteName;
     }
 }

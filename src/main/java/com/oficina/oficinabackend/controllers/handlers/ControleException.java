@@ -2,6 +2,7 @@ package com.oficina.oficinabackend.controllers.handlers;
 
 import com.oficina.oficinabackend.dto.errors.CustomError;
 import com.oficina.oficinabackend.dto.errors.ValidationError;
+import com.oficina.oficinabackend.services.exceptions.DatabaseException;
 import com.oficina.oficinabackend.services.exceptions.ResourceNotFound;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -34,4 +35,15 @@ public class ControleException {
         return ResponseEntity.status(status).body(err);
     }
 
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> databaseException(DatabaseException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Database error!");
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(status).body(error);
+    }
 }

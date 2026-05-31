@@ -21,19 +21,31 @@ public class ClienteController {
     private ClienteService service;
 
     @GetMapping
-    public ResponseEntity<Page<ClienteMinDTO>> findAllClients(
+    public ResponseEntity<Page<ClienteCompleteDTO>> findAll(
             @RequestParam(name = "nome", defaultValue = "")String nome, Pageable pageable) {
-        Page<ClienteMinDTO> dto = service.findAllClients(nome, pageable);
+        Page<ClienteCompleteDTO> dto = service.findAll(nome, pageable);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<ClienteCompleteDTO> insert(@Valid @RequestBody ClienteCompleteDTO dto) {
+    public ResponseEntity<ClienteMinDTO> insert(@Valid @RequestBody ClienteMinDTO dto) {
         dto = service.insert(dto);
-        URI uri =  ServletUriComponentsBuilder.
-                fromCurrentRequest()
+        URI uri =  ServletUriComponentsBuilder
+                .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClienteMinDTO> update(@PathVariable Long id, @Valid @RequestBody ClienteMinDTO dto) throws Exception {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<ClienteMinDTO> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
