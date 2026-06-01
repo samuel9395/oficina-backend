@@ -21,10 +21,16 @@ public class ClienteController {
     private ClienteService service;
 
     @GetMapping
-    public ResponseEntity<Page<ClienteCompleteDTO>> findAll(
-            @RequestParam(name = "nome", defaultValue = "")String nome, Pageable pageable) {
-        Page<ClienteCompleteDTO> dto = service.findAll(nome, pageable);
+    public ResponseEntity<Page<ClienteMinDTO>> findAll(
+            @RequestParam(name = "cpf", defaultValue = "")String cpf, Pageable pageable) {
+        Page<ClienteMinDTO> dto = service.findAll(cpf, pageable);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ClienteCompleteDTO> findById(@PathVariable Long id) {
+        ClienteCompleteDTO dto = service.findById(id);
+        return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping

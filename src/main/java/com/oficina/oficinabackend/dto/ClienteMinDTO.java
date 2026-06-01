@@ -1,6 +1,10 @@
 package com.oficina.oficinabackend.dto;
 
 import com.oficina.oficinabackend.entities.Cliente;
+import com.oficina.oficinabackend.entities.Veiculo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteMinDTO {
 
@@ -10,6 +14,9 @@ public class ClienteMinDTO {
     private String email;
     private String cpf;
     private String endereco;
+
+    private List<VeiculoMinDTO> veiculos = new ArrayList<>();
+
 
     public ClienteMinDTO() {
     }
@@ -30,6 +37,10 @@ public class ClienteMinDTO {
         email = entity.getEmail();
         cpf = entity.getCpf();
         endereco = entity.getEndereco();
+
+        for (Veiculo veiculo : entity.getVeiculos()) {
+            veiculos.add(new VeiculoMinDTO(veiculo));
+        }
     }
 
     public Long getId() {

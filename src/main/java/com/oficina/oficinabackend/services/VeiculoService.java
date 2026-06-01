@@ -1,6 +1,7 @@
 package com.oficina.oficinabackend.services;
 
 import com.oficina.oficinabackend.dto.VeiculoDTO;
+import com.oficina.oficinabackend.dto.VeiculoMinDTO;
 import com.oficina.oficinabackend.entities.Cliente;
 import com.oficina.oficinabackend.entities.Veiculo;
 import com.oficina.oficinabackend.repositories.ClienteRepository;
@@ -21,9 +22,9 @@ public class VeiculoService {
     private ClienteRepository clienteRepository;
 
     @Transactional(readOnly = true)
-    public Page<VeiculoDTO> findAll(Pageable pageable) {
+    public Page<VeiculoMinDTO> findAll(Pageable pageable) {
         Page<Veiculo> result = repository.findAll(pageable);
-        return result.map(VeiculoDTO::new);
+        return result.map(VeiculoMinDTO::new);
     }
 
     @Transactional(readOnly = true)

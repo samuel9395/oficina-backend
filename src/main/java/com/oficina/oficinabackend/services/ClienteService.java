@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class ClienteService {
 
@@ -26,9 +28,16 @@ public class ClienteService {
     private ClienteRepository repository;
 
     @Transactional(readOnly = true)
-    public Page<ClienteCompleteDTO> findAll(String nome, Pageable pageable) {
-        Page<Cliente> result = repository.findAll(nome, pageable);
-        return result.map(ClienteCompleteDTO::new);
+    public Page<ClienteMinDTO> findAll(String cpf, Pageable pageable) {
+        Page<Cliente> result = repository.findAll(cpf, pageable);
+        return result.map(ClienteMinDTO::new);
+    }
+
+    @Transactional(readOnly = true)
+    public ClienteCompleteDTO findById(Long id) {
+        Optional<Cliente> obj = repository.findById(id);
+        Cliente entity = obj.orElseThrow(() -> new ResourceNotFound("Entity not found with id: " + id));
+        return new ClienteCompleteDTO(entity);
     }
 
     @Transactional

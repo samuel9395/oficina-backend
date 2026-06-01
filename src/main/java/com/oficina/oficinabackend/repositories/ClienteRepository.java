@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Query("SELECT obj FROM Cliente obj " +
-            "WHERE UPPER(obj.nome) LIKE UPPER(CONCAT('%', :nome, '%')) ")
-    Page<Cliente> findAll(String nome, Pageable pageable);
+            "WHERE UPPER(obj.cpf) LIKE UPPER(CONCAT('%', :cpf, '%')) ")
+    Page<Cliente> findAll(String cpf, Pageable pageable);
 }
 

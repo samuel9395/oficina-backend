@@ -58,15 +58,15 @@ spring:
       on-profile: prod
 
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3307/oficina}
+    url: ${DB_URL:jdbc:mysql://localhost:3307/oficina_db}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USER:root}
-    password: ${DB_PASSWORD:}
+    password: ${DB_PASSWORD:root}
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:

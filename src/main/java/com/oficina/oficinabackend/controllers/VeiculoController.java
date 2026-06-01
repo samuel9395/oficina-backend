@@ -2,6 +2,7 @@ package com.oficina.oficinabackend.controllers;
 
 import com.oficina.oficinabackend.dto.ClienteMinDTO;
 import com.oficina.oficinabackend.dto.VeiculoDTO;
+import com.oficina.oficinabackend.dto.VeiculoMinDTO;
 import com.oficina.oficinabackend.services.VeiculoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class VeiculoController {
     private VeiculoService service;
 
     @GetMapping
-    public ResponseEntity<Page<VeiculoDTO>> findAll(Pageable pageable) {
-        Page<VeiculoDTO> dto = service.findAll(pageable);
+    public ResponseEntity<Page<VeiculoMinDTO>> findAll(Pageable pageable) {
+        Page<VeiculoMinDTO> dto = service.findAll(pageable);
         return ResponseEntity.ok(dto);
     }
 
